@@ -1,0 +1,75 @@
+﻿@model MeasurementsViewModel
+
+@{
+	ViewData["Title"] = "All Measurements";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a class="link-offset-2 link-underline link-underline-opacity-0" asp-controller="Measurements" asp-action="Add">Add a New BP Measurements</a>
+	<span>|</span>
+	<a>Information on BP Measurement</a>
+</p>
+
+@if(Model.Measurements.Count > 0)
+{
+    <table class="table table-bordered table-striped">
+        <caption>List of Measurements</caption>
+        <thead>
+            <tr>
+                <th>Reading</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Position</th> 
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var measurements in Model.Measurements)
+            {
+                <tr>
+                    @{
+                        switch (@measurements.Category)
+                        {
+                            case "Normal":
+                                <td class="text-success">@measurements.Systolic/@measurements.Diastolic</td>
+                                <td class="text-success">@measurements.Category</td>
+                                break;
+                            case "Elevated":
+                                <td class="text-primary">@measurements.Systolic/@measurements.Diastolic</td>
+                                <td class="text-primary">@measurements.Category</td>
+                                break;
+                            case "Hypertension Stage 1":
+                                <td class="text-warning">@measurements.Systolic/@measurements.Diastolic</td>
+                                <td class="text-warning">@measurements.Category</td>
+                                break;
+                            case "Hypertension Stage 2":
+                                <td class="text-danger" style="--bs-text-opacity: .7;">@measurements.Systolic/@measurements.Diastolic</td>
+                                <td class="text-danger" style="--bs-text-opacity: .7;">@measurements.Category</td>
+                                break;
+
+                            default:
+                                <td class="text-danger">@measurements.Systolic/@measurements.Diastolic</td>
+                                <td class="text-danger">@measurements.Category</td>
+                                break;
+                        }
+                    }
+                    <td>@measurements.Date</td>
+                    <td>@measurements.Position?.Name</td> 
+                    <td>
+                        <a class="link-info link-offset-2 link-underline link-underline-opacity-0" asp-controller="Measurement" asp-action="Edit" asp-route-id="@measurements.MeasurementId">Edit</a>
+                        <span class="mx-1">|</span>
+                        <a class="link-danger link-offset-2 link-underline link-underline-opacity-0" asp-controller="Measurement" asp-action="Delete" asp-route-id="@measurements.MeasurementId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info" role="alert">
+        No BP Measurements found! Add a BP Measurement to the list.
+    </div>
+}

@@ -1,0 +1,19 @@
+﻿@model MeasurementViewModel
+@{
+    ViewData["Title"] = "Delete a Measurement";
+}
+<h1>@ViewData["Title"]</h1>
+<h6>Confirm Deletion</h6>
+
+<h3>Delete @Model.ActiveMeasurement.Diastolic/ @Model.ActiveMeasurement.Systolic (@Model.ActiveMeasurement.Date) ?</h3>
+
+<form method="post" asp-action="Delete">
+    <input type="hidden" asp-for="ActiveMeasurement.MeasurementId" />
+    <input type="hidden" asp-for="ActiveMeasurement.Diastolic" />
+    <input type="hidden" asp-for="ActiveMeasurement.Systolic" />
+    <input type="hidden" asp-for="ActiveMeasurement.Date" />
+
+    <input type="submit" class="btn btn-danger" value="Delete" />
+    <a class="btn btn-secondary" asp-controller="Measurements" asp-action="List">Cancel</a>
+
+</form>

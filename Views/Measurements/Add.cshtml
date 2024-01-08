@@ -1,0 +1,39 @@
+﻿@model MeasurementViewModel
+@{
+    ViewData["Title"] = "Add a New BP Measurements";
+}
+<h1>@ViewData["Title"]</h1>
+
+<form method="post" asp-action="Add">
+    <div class="text-danger" asp-validation-summary="All"></div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="ActiveMeasurement.Systolic">Systolic</label>
+        <input class="form-control" type="text" asp-for="ActiveMeasurement.Systolic" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="ActiveMeasurement.Diastolic">Diastolic</label>
+        <input class="form-control" type="text" asp-for="ActiveMeasurement.Diastolic" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="ActiveMeasurement.Date">Date</label>
+        <input class="form-control" type="text" asp-for="ActiveMeasurement.Date" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="ActiveMeasurement.PositionId">Position</label>
+        <select class="form-select" asp-for="ActiveMeasurement.PositionId">
+            <option value="">Select a Position</option>
+		    @foreach(var position in Model.Positions!)
+		    {
+                <option value="@position.PositionId">@position.Name</option>
+		    }
+		</select>
+
+	</div>
+    <input type="submit" class="btn btn-primary" value="Add" />
+    <a class="btn btn-secondary" asp-controller="Measurements" asp-action="List">Cancel</a>
+
+</form>
